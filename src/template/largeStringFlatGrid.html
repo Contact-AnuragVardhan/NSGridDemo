@@ -1,0 +1,148 @@
+<div>
+    <div id="dgLargeStringFlatGrid"></div>
+    <script>
+        var largeStringFlatGridColumns = [
+            {headerText:"Case ID",dataField:"id",width:"100px",sortable:true,sortType:"number",draggable:false,resizable:true,showMenu:true},
+            {headerText:"Client",dataField:"client",width:"210px",sortable:true,draggable:true,resizable:true,showMenu:true},
+            {headerText:"Region",dataField:"region",width:"140px",sortable:true,draggable:true,resizable:true,showMenu:true},
+            {headerText:"Review Details",dataField:"reviewDetails",width:"720px",sortable:true,draggable:true,resizable:true,showMenu:true,itemRenderer:"largeStringItemRenderer"},
+            {headerText:"Status",dataField:"status",width:"150px",sortable:true,draggable:true,resizable:true,showMenu:true},
+            {headerText:"Exposure",dataField:"exposure",width:"160px",sortable:true,sortType:"number",draggable:true,resizable:true,showMenu:true},
+            {headerText:"Review Owner",dataField:"owner",width:"220px",sortable:true,draggable:true,resizable:true,showMenu:true}
+        ];
+
+        var largeStringFlatGridSetting = {
+            nsTitle:"Large String Flat Grid Demo",
+            type:"",
+            renderInCachedMode:false,
+            enableVirtualScroll:true,
+            enableDataRefreshOnScrollEnd:false,
+            enableMouseHover:false,
+            enableColumnMouseHover:false,
+            enableFilter:false,
+            enableAdvancedFilter:false,
+            enablePagination:false,
+            paginationType:"scroll",
+            enableAsyncLoadPagination:false,
+            paginationMode:"auto",
+            enableMultipleSelection:false,
+            rowKeyField:"id",
+            customScrollerRequired:false,
+            columnResizable:true,
+            enableVariableRowHeight:true,
+            columnDraggable:true,
+            pageSize:100,
+            totalRecords:10000,
+            rowHeight:30,
+            enableFixedColumnAnimation:false,
+            enableRowMove:false,
+            enableContextMenu:false,
+            enableExport:false,
+            enableResponsive:false,
+            responsiveMode:"stack",
+            heightOffset:250,
+            theme:"White",
+            enableCellSelection:false,
+            enableRowSelection:false,
+            columnAutoSize:false,
+            enableMultiCellSelection:false,
+            enableColumnSetting:true
+        };
+
+        var largeStringFlatGrid = null;
+        var largeStringFlatGridItems = [];
+
+        window["loadLargeStringFlatGridHandler"] = function ()
+        {
+            var dgDemo = document.getElementById("dgLargeStringFlatGrid");
+            largeStringFlatGrid = new NSGrid(dgDemo,largeStringFlatGridSetting);
+            largeStringFlatGridItems = [];
+
+            var clients = [
+                "Northstar Financial Services",
+                "BlueRiver Capital Markets",
+                "Summit Ridge Investments",
+                "Crescent Bay Holdings",
+                "Pioneer Global Partners",
+                "Evergreen Asset Management",
+                "HarborPoint Securities",
+                "Redwood Institutional Advisors",
+                "Silverline Trading Group",
+                "Oakmont Corporate Finance"
+            ];
+
+            var regions = ["United States","EMEA","Asia Pacific","Canada","Latin America"];
+            var statuses = ["Open","In Review","Pending Approval","Escalated","Completed"];
+            var owners = [
+                "Amanda Wilson",
+                "Daniel Carter",
+                "Sophia Martinez",
+                "Michael Thompson",
+                "Priya Sharma",
+                "James Anderson",
+                "Emily Chen",
+                "Robert Davis"
+            ];
+
+            var reviewDetailValues = [
+                "Transaction volume is materially higher than the client's established thirty day activity baseline",
+                "Multiple transactions were initiated within a short period and require additional pattern review",
+                "Cross border activity involves counterparties located across several different operating jurisdictions",
+                "Payment instructions were modified shortly before settlement and require independent confirmation",
+                "Account activity includes several unusually large transfers compared with the client's historical profile",
+                "The source of funds documentation requires additional review before the case can be completed",
+                "Recent activity contains transactions with values close to internal monitoring thresholds",
+                "Beneficiary information changed during the review period and requires validation against account records",
+                "Several transactions reference newly added counterparties that have limited prior activity with the client",
+                "The account shows a rapid movement of funds between incoming receipts and outgoing transfers",
+                "Supporting documentation was received but several fields require clarification from the relationship team"
+            ];
+
+            for(var count = 0;count < 10000;count++)
+            {
+                var detailCount = 2 + Math.floor(count / 1000);
+                var reviewDetails = [];
+
+                for(var valueIndex = 0;valueIndex < detailCount;valueIndex++)
+                {
+                    reviewDetails.push(reviewDetailValues[(count + valueIndex) % reviewDetailValues.length]);
+                }
+
+                largeStringFlatGridItems.push({
+                    id:count + 1,
+                    client:clients[count % clients.length],
+                    region:regions[count % regions.length],
+                    reviewDetails:reviewDetails.join(","),
+                    status:statuses[count % statuses.length],
+                    exposure:Math.round((25000 + ((count * 1735.47) % 975000)) * 100) / 100,
+                    owner:owners[count % owners.length]
+                });
+            }
+
+            largeStringFlatGrid.setColumn(largeStringFlatGridColumns);
+            largeStringFlatGrid.dataSource(largeStringFlatGridItems);
+        };
+
+        window["largeStringItemRenderer"] = function(data,dataField,rowIndex,columnIndex,row)
+        {
+            var container = document.createElement("div");
+            container.style.whiteSpace = "normal";
+            container.style.lineHeight = "20px";
+            container.style.padding = "5px 0";
+
+            if(data && data[dataField])
+            {
+                var values = data[dataField].split(",");
+
+                for(var count = 0;count < values.length;count++)
+                {
+                    var line = document.createElement("div");
+                    line.textContent = values[count].trim();
+                    container.appendChild(line);
+                }
+            }
+
+            return container;
+        };
+    </script>
+</div>
