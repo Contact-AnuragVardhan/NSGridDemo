@@ -27,13 +27,13 @@
     <link href="assets/css/nmComponentWhite.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/nmComponentBlack.css" rel="stylesheet" type="text/css" />
     
-    <link href="https://unpkg.com/nscontainerbase@0.4.2/nsComponent.min.css" rel="stylesheet" type="text/css" />
+    <!--<link href="https://unpkg.com/nscontainerbase@0.4.2/nsComponent.min.css" rel="stylesheet" type="text/css" />
    	<link href="https://unpkg.com/nsscroller@0.4.2/nsScroller.min.css" rel="stylesheet" type="text/css" />
     <link href="https://unpkg.com/nsgrid@0.4.2/nsGrid.min.css" rel="stylesheet" type="text/css" />
     <link href="https://unpkg.com/nsdatepicker@0.4.2/nsDatePicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://unpkg.com/nsnavigation@0.4.2/nsNavigation.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/nsnavigation@0.4.2/nsNavigation.min.css" rel="stylesheet" type="text/css" />-->
     
-    <!-- <link href="/JSLib/lib/css/com/org/nsGrid.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsGrid.css" rel="stylesheet" type="text/css" />
     <link href="/JSLib/lib/css/com/org/nsMenu.css" rel="stylesheet" type="text/css" />
     <link href="/JSLib/lib/css/com/org/nsComponent.css" rel="stylesheet" type="text/css" />
     <link href="/JSLib/lib/css/com/org/nsPagination.css" rel="stylesheet" type="text/css" />
@@ -42,7 +42,7 @@
     <link href="/JSLib/lib/css/com/org/nsCalendar.css" rel="stylesheet">
     <link href="/JSLib/lib/css/com/org/nsDatePicker.css" rel="stylesheet">
     <link href="/JSLib/lib/css/com/org/nsNavigation.css" rel="stylesheet">
-	<link href="/JSLib/lib/css/com/org/nsFloatingLabel.css" rel="stylesheet"> -->
+	<link href="/JSLib/lib/css/com/org/nsFloatingLabel.css" rel="stylesheet">
     <style>
     	.nsNavHeader .nsNavSearchContainer
 		{
@@ -110,7 +110,6 @@
 	 <script src="https://unpkg.com/nsajax@0.3.2"></script>
 	 <script src="https://unpkg.com/nsnavigation@0.4.2"></script>-->
 	 
-<template id="legacyJSLibImports">
 	<script src="/JSLib/lib/com/org/util/nsIEUtils.js"></script>
 	<script src="/JSLib/lib/com/org/util/nsUtil.js"></script>
 	<script src="/JSLib/lib/com/org/util/nsPluggins.js"></script>
@@ -140,16 +139,6 @@
 	<script src="/JSLib/lib/com/org/prototype/nsDatePicker.js"></script>
 	<script src="/JSLib/lib/com/org/util/nsFloatingLabel.js"></script>
 	<script src="/JSLib/lib/com/org/prototype/nsNavigation.js"></script>
-</template>
-    <script src="https://unpkg.com/nscomputil@0.4.2"></script>
-    <script src="https://unpkg.com/nssvg@0.4.2"></script>
-    <script src="https://unpkg.com/nscontainerbase@0.4.2"></script>
-    <script src="https://unpkg.com/nspluggins@0.4.2"></script>
-    <script src="https://unpkg.com/nsscroller@0.4.2"></script>
-    <script src="https://unpkg.com/nsgrid@0.4.2"></script>
-    <script src="https://unpkg.com/nsrouter@0.4.2"></script>
-    <script src="https://unpkg.com/nsdatepicker@0.4.2"></script>
-    <script src="https://unpkg.com/nsnavigation@0.4.2"></script>
 	 
 	 <script>
 	 	 var nsNav = null;
@@ -285,7 +274,12 @@
 	            var item = event["detail"];
 	            if(nsRouter)// && (!this.selectedMenu || this.selectedMenu.link != item.link)
 	            {
-	                //nsRouter.routeTo(item.link);
+					const loc = window.location;
+					if(loc.hostname === 'localhost' && (!selectedMenu || (selectedMenu && selectedMenu.link 
+						&& selectedMenu.link !== item.link))) {
+							const link =  (loc.hash && item.link.startsWith('#')) ? item.link.substring(1) : item.link;
+							nsRouter.routeTo(link);
+						}
 	                selectedMenu = item;
 	            }
 	          break;
