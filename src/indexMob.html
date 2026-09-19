@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Grid Mobile Demo</title>
+  	<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+  	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,height=device-height,width=device-width,user-scalable = no">
+
+<template id="legacyJSLibStyles">
+	<link href="/JSLib/lib/css/com/org/nsGrid.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsMenu.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsComponent.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsPagination.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsList.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsScroller.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsCalendar.css" rel="stylesheet">
+    <link href="/JSLib/lib/css/com/org/nsDatePicker.css" rel="stylesheet">
+     <link href="/JSLib/lib/css/com/org/nsVirtualScroll.css" rel="stylesheet">
+</template>
+    <link href="https://unpkg.com/nscontainerbase@0.4.2/nsComponent.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/nsscroller@0.4.2/nsScroller.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/nsgrid@0.4.2/nsGrid.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/nsdatepicker@0.4.2/nsDatePicker.min.css" rel="stylesheet" type="text/css" />
+    
+    
+<!--     <link href="generated/css/nsComponent.min.css" rel="stylesheet" type="text/css" /> -->
+<!--     <link href="generated/css/nsScroller.min.css" rel="stylesheet" type="text/css" /> -->
+<!--     <link href="generated/css/nsGrid.min.css" rel="stylesheet" type="text/css" /> -->
+<!--     <link href="generated/css/nsDatePicker.min.css" rel="stylesheet" type="text/css" /> -->
+<style>
+html,body{
+overflow: hidden;
+}
+
+.nonFirstGridBodyCell
+{
+	padding-left:5px !important;
+}
+
+</style>
+</head>
+<body>
+<div id="dgDemo" style="width:100%;height:100%;">
+</div>
+
+<template id="legacyJSLibImports">
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+<script src="/JSLib/lib/com/org/util/nsIEUtils.js"></script>
+<script src="/JSLib/lib/com/org/util/nsUtil.js"></script>
+<script src="/JSLib/lib/com/org/util/nsPluggins.js"></script>
+<script src="/JSLib/lib/com/org/util/nsTouchToMouse.js"></script>
+<script src="/JSLib/lib/com/org/prototype/base/nsContainerBase.js"></script> 
+<script src="/JSLib/lib/com/org/util/nsPagination.js"></script>
+<script src="/JSLib/lib/com/org/util/nsScrollAnimator.js"></script>
+<script src="/JSLib/lib/com/org/util/nsScroller.js"></script>
+<script src="/JSLib/lib/com/org/util/nsSVG.js"></script>
+<script src="/JSLib/lib/com/org/util/nsMenu.js"></script>
+<script src="/JSLib/lib/com/org/util/nsFlatGrid.js"></script>
+<script src="/JSLib/lib/com/org/util/nsGroupingGrid.js"></script>
+<script src="/JSLib/lib/com/org/util/nsHierarchicalGrid.js"></script>
+<script src="/JSLib/lib/com/org/util/nsFilter.js"></script>
+<script src="/JSLib/lib/com/org/util/nsGridPluggins.js"></script>
+<script src="/JSLib/lib/com/org/util/nsVirtualScroll.js"></script>
+<script src="/JSLib/lib/com/org/prototype/nsGrid.js"></script>
+<script src="/JSLib/lib/com/org/prototype/nsList.js"></script>
+<script src="/JSLib/lib/com/org/util/nsXlsxExport.js"></script>
+<script src="/JSLib/lib/com/org/util/nsZip.js"></script>
+<script src="/JSLib/lib/com/org/util/nsExport.js"></script>
+<script src="/JSLib/lib/com/org/util/nsRouter.js"></script>
+<script src="/JSLib/lib/com/org/util/nsDateUtil.js"></script>
+<script src="/JSLib/lib/com/org/util/nsAjax.js"></script>
+<script src="/JSLib/lib/com/org/prototype/nsCalendar.js"></script>
+<script src="/JSLib/lib/com/org/prototype/nsDatePicker.js"></script>
+</template>
+    <script src="https://unpkg.com/nscomputil@0.4.2"></script>
+    <script src="https://unpkg.com/nssvg@0.4.2"></script>
+    <script src="https://unpkg.com/nscontainerbase@0.4.2"></script>
+    <script src="https://unpkg.com/nspluggins@0.4.2"></script>
+    <script src="https://unpkg.com/nsscroller@0.4.2"></script>
+    <script src="https://unpkg.com/nsgrid@0.4.2"></script>
+    <script src="https://unpkg.com/nsrouter@0.4.2"></script>
+    <script src="https://unpkg.com/nsdatepicker@0.4.2"></script>
+
+<!--  <script src="generated/js/nsUtil.min.js"></script> -->
+<!--  <script src="generated/js/nsSVG.min.js"></script> -->
+<!--  <script src="generated/js/nsContainerBase.min.js"></script> -->
+<!--  <script src="generated/js/nsPluggins.min.js"></script> -->
+<!--  <script src="generated/js/nsScroller.min.js"></script> -->
+<!--  <script src="generated/js/nsXlsxExport.min.js"></script> -->
+<!--  <script src="generated/js/nsGrid.min.js"></script> -->
+<!--  <script src="generated/js/nsRouter.min.js"></script> -->
+<!--  <script src="generated/js/nsDatePicker.min.js"></script> -->
+<!--  <script src="generated/js/nsAjax.min.js"></script> -->
+
+<script>
+var nsGrid = null;
+var arrItems = [];
+var util = null;
+function loadHandler(event) 
+{
+	util = new NSUtil();
+	setGridHeight();
+	var column = [
+  		{headerText:"Id",dataField:"id",width:"30px",sortable:true,sortDescending:true,draggable:false,resizable:true,showMenu:true,minWidth:50,priority:1},
+  		{headerText:"Employees",dataField:"employeesID",width:"150px",sortable:false,sortDescending:true,priority:4,
+  			itemRenderer:"employeeItemRenderer",groupRenderer:"employeeGroupRenderer",enableFilter:false},
+  		{headerText:"Country",dataField:"country",width:"80px",sortable:true,sortDescending:true,draggable:false,resizable:true,showMenu:true,priority:2},
+  		{headerText:"Hierarchy",dataField:"hierarchy",width:"150px",sortable:true,sortDescending:false,showMenu:true,headerTruncateToFit:true,truncateToFit:true,priority:1},
+  		{headerText:"Year",dataField:"year",width:"100px",sortable:true,sortDescending:true,showMenu:true,priority:3},
+  		{headerText:"Date",dataField:"date",width:"150px",sortable:true,sortDescending:true,showMenu:true,labelFunction:"dateLabelFunction",truncateToFit:true,priority:5},
+  		{headerText:"",dataField:"checked",width:"30px",draggable:false,sortable:false,sortDescending:false,itemRenderer:"itemRenderer",
+  			isExportable:false,showMenu:false,enableFilter:false,
+  		 filter:{enableAdvancedFilter:false}}
+  	];
+	var virtualScrollSetting = {pageSize:20,pagesRendered:3,enableScrollDelay: true,scrollInterval: 50,enableLoader: true};
+	var setting = {nsTitle:"Mobile Grouping Grid Demo",type:"group",isSingleLevelGrouping:"true",enableVirtualScroll:true,virtualScrollSetting: virtualScrollSetting,enableAutoResize: false,
+	   groupByField:"country",enableFilter:true,enableAdvancedFilter:true,enableMouseHover:true,enableMultipleSelection:true,
+ 	   childField:"children",rowKeyField:"id",columnResizable:true,enableVariableRowHeight:false,
+       columnDraggable:true,rowHeight:32,leftFixedColumn:0,rightFixedColumn:0,
+       enableExport:true,enableToolTipForTruncateText:true,
+       customClass:{nonFirstBodyColumn:"nonFirstGridBodyCell"}};
+	
+	arrItems = [];
+	var item = {};
+	var count = 0;
+	var dgDemo = document.getElementById("dgDemo");
+	nsGrid = new NSGrid(dgDemo,setting);
+	var totalRecords = 1000;
+	var arrEmployee = [];
+	for(count = 0;count < 10;count++)
+	{
+		var item = {};
+		item.employee = "Employee " + (count + 1);
+		item.employeeID = count;
+		arrEmployee.push(item);
+	}
+	for(var count = 0;count < totalRecords;count++)
+	{
+		item = {id: count, hierarchy: 'Hierarchy ' + count, supervisor: "Supervisor " + count, country: 'UK', employeeSrc: arrEmployee, employeesID: getRandomInt(0,9), price: (10 * count), year: 1985 + count,checked:false};
+		if((count % 2) === 0)
+		{
+			item["country"] = "US";
+		}
+		var date = new Date();
+        date.setFullYear(2015, Math.floor(Math.random() * 12), Math.floor(Math.random() * 27));
+        date.setHours(Math.floor(Math.random()*23), Math.floor(Math.random()*59), Math.floor(Math.random()*59), 0);
+        item["date"] = date;
+		arrItems.push(item);
+	}
+	nsGrid.setColumn(column);
+	//nsGrid.dataSource(arrItems);
+	nsGrid.dataSource([]);
+	
+	
+	nsGrid.fixFixedHeader();
+}
+
+window["dateLabelFunction"] = function (item,dataField,colItem)
+{
+	if(item && item[dataField])
+	{
+		var date = item[dataField];
+		//return date.format("mm/dd/yyyy hh:MM:ss TT");
+		return date
+	}
+	return "";
+}
+
+window["filterRenderer"] = function (colItem,colIndex)
+{
+	var htmlText = "";
+	if(colItem)
+	{
+		if(colItem["dataField"] === "date")
+		{
+			htmlText = "<div class='filterContainer'><input type='text' class='date filter' field='date' onchange='keyUpHandler(event)'/></div>";
+			
+		}
+		else 
+		{
+			var field = colItem["dataField"];
+			htmlText = "<div class='filterContainer'><input id='txt" + field + "' type='search' results='5' placeholder='Search " + field +"' +   field='" + field + "' class='filter' " +
+						   " onkeyup='keyUpHandler(event)'/></div>";
+		}
+	}
+	return htmlText;
+}
+	
+window["employeeItemRenderer"] = function (item,dataField,colIndex,row)
+{
+	var htmlText = "";
+	if(item && item["employeeSrc"] && dataField)
+	{
+		var arrEmployee = item["employeeSrc"];
+		cmbSelect = document.createElement("SELECT");
+		cmbSelect.onclick = employeeClickHandler;
+		cmbSelect.onchange = employeeGroupChangeHandler;
+		cmbSelect.style.width = "100%";
+		for(var count = 0;count < arrEmployee.length; count++)
+		{
+			var empItem = arrEmployee[count];
+			if(parseInt(item[dataField]) === parseInt(empItem.employeeID))
+			{
+				htmlText += "<option value='" + empItem.employeeID + "' selected>" + empItem.employee + "</option>";	
+			}
+			else
+			{
+				htmlText += "<option value='" + empItem.employeeID + "'>" + empItem.employee + "</option>";
+			}
+			//htmlText += "<option value='" + empItem.employeeID + "'>" + empItem.employee + "</option>";
+		}
+		cmbSelect.innerHTML = htmlText;
+	}
+	return cmbSelect;
+}
+window["employeeGroupRenderer"] = function (item,dataField,rowIndex,columnIndex,row)
+{
+	var htmlText = "";
+	if(item)
+	{
+		var arrChildren = item["children"];
+		if(arrChildren && arrChildren.length > 0)
+		{
+			var arrEmployee = [];
+			if(arrChildren[0].hasOwnProperty("employeeSrc") && arrChildren[0]["employeeSrc"])
+			{
+				arrEmployee = arrChildren[0]["employeeSrc"];
+			}
+			else if(arrChildren[0]["children"] && arrChildren[0]["children"].length > 0 && arrChildren[0]["children"][0].hasOwnProperty("employeeSrc") && arrChildren[0]["children"][0]["employeeSrc"])
+			{
+				arrEmployee = arrChildren[0]["children"][0]["employeeSrc"];
+			}
+			htmlText = "<select onclick='employeeClickHandler(event);' onchange='employeeGroupChangeHandler(event);' style='width: 100%;'>";
+			htmlText += "<option value='" + -1 + "'>" + "Select Employee" + "</option>";
+			for(var count = 0;count < arrEmployee.length; count++)
+			{
+				var empItem = arrEmployee[count];
+				if(parseInt(item[dataField]) === parseInt(empItem.employeeID))
+				{
+					htmlText += "<option value='" + empItem.employeeID + "' selected>" + empItem.employee + "</option>";	
+				}
+				else
+				{
+					htmlText += "<option value='" + empItem.employeeID + "'>" + empItem.employee + "</option>";
+				}
+				//htmlText += "<option value='" + empItem.employeeID + "'>" + empItem.employee + "</option>";
+			}
+			htmlText += "</select>";
+		}
+	}
+	return htmlText;
+}
+
+window["employeeClickHandler"] = function (event)
+{
+	event.stopImmediatePropagation();
+}
+
+window["employeeGroupChangeHandler"] = function (event)
+{
+	nsGrid.cascadeValues(event);
+}
+
+window["employeeChangeHandler"] = function (event)
+{
+	nsGrid.getItemInfo(event)["item"]["employeesID"] = event.target.value;
+}
+
+window["setGroupChange"] = function (cascadeControl,childControl,item,dataField,cellIndex,colItem,cell,row)
+{
+	var value = null;
+	if(cascadeControl && childControl)
+	{
+		value = cascadeControl.value;
+		childControl.value =  value;
+	}
+	return value;
+}
+
+window["filterDate"] = function (item,setting)
+{
+	if(item && setting && setting["value"])
+	{
+		var value = setting["value"];
+		value = value.replace(/\\/g, "");
+		var now = moment(item);
+		if (moment(value).isAfter(now, 'day'))
+		{
+			return false;
+		}
+		return true;
+	}
+	return false;
+}
+
+window["itemRenderer"] = function (data,dataField,rowIndex,columnIndex,row)
+{
+	var selected = data[dataField];
+	//row.update();
+	/*if(selected)
+	{
+		return '<input type="checkbox" checked>';
+	}
+	else
+	{
+		return '<input type="checkbox">';
+	}*/
+	var checkbox = document.createElement('input');
+	checkbox.type = "checkbox";
+	if(selected)
+	{
+		checkbox.setAttribute("checked",true);
+	}
+	checkbox.addEventListener('click', window["checkBoxClickHandler"].bind(window,data,dataField,rowIndex,columnIndex,row));
+	return checkbox;
+	/*if(data["checked"])
+	{
+		return "<a href=# class='purple' onclick='anchorClick(event," + rowIndex +"," + data["id"] +")'>" + returnAlphabets("a",rowIndex + 1) + "</a>";
+	}
+	else
+	{
+		return "<a href=# onclick='anchorClick(event," + rowIndex +"," + data["id"] +")'>" + returnAlphabets("a",rowIndex + 1) + "</a>";
+	}*/
+}
+
+window["checkBoxClickHandler"] = function (data,dataField,rowIndex,columnIndex,row,event)
+{
+	data[dataField] = true;
+	nsGrid.updateItemInDataSource(data);
+	nsGrid.updateRowByKeyField(data.id);
+}
+
+window["returnAlphabets"] = function (alphabet,count)
+{
+	var retValue = "";
+	for(var innerCount= 1;innerCount < count;innerCount++)
+	{
+		retValue += alphabet;
+	}
+	return retValue;
+}
+
+window["setData"] = function (renderer,data,dataField,colItem,row)
+{
+	if(renderer)
+	{
+		if(data)
+		{
+			renderer.rendererBody.chk.onchange = checkBox_changeHandler;
+			renderer.rendererBody.chk.checked = data[dataField];
+		}
+		else
+		{
+			clearData(renderer);
+		}
+	}
+}
+
+window["clearData"] = function (renderer)
+{
+	if(renderer)
+	{
+		renderer.rendererBody.chk.checked = false;
+	}
+}
+
+window["checkBox_changeHandler"] = function (event) 
+{					
+	var checked = event.target.checked ? "checked":"unchecked";
+	event.target.data["hierarchy"] = event.target.data["hierarchy"] + "1"; 
+	event.target.data["checked"] = checked;
+    alert(event.target.data["id"] + " is " + checked);
+    event.target.row.update();
+    event.stopImmediatePropagation();
+}
+
+window["getRandomInt"] = function (min, max) {
+	  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+window["setGridHeight"] = function()
+{
+	var isPotrait = isScreenPotrait();
+	var div = document.getElementById("dgDemo");
+	if(div)
+	{
+		var offset = isPotrait ? 20 : 30;
+		div.style.height = (window.innerHeight - offset) + "px";
+		if(nsGrid)
+		{
+			nsGrid.reRender();
+		}
+	}
+};
+
+window["isScreenPotrait"] = function()
+{
+	var isPotrait = (window.innerHeight > window.innerWidth);
+	return isPotrait;
+};
+
+var windowResizeInterval = null;
+window["windowResize"] = function(event)
+{
+	clearTimeout(windowResizeInterval);
+	windowResizeInterval = setTimeout(function(){
+		setGridHeight();
+	},0);
+};
+
+window.addEventListener('load', loadHandler);
+window.addEventListener('resize', windowResize);
+</script>
+
+<script id="script1">
+</script>
+
+</body>
+</html>

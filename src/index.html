@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta name="author" content="NSComponent">
+    <meta name="publisher" content="NSComponent">
+    <meta name="copyright" content="NSComponent">
+    <meta name="REVISIT-AFTER" content="10 days">
+    <meta name="page-topic" content="Javascript Datagrid Components without dependencies">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="INDEX,FOLLOW">
+    <meta name="language" content="English">
+    <meta name="googlebot" content="NOODP">
+    <meta name="keywords" content="javascript,Data grid,Data table, tree grid, hierarchical grid, grouping grid">
+    <meta name="description" content="NSGrid is a feature rich datagrid/datatable designed for the major JavaScript Frameworks. Easily integrate into applications to deliver filtering, grouping, aggregation and much more with the performance that users expect.">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>NSGrid: High-Performance JavaScript Grid,Data table,React Grid, Angular Grid </title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <link href="assets/css/index.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/nmComponent.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/nmComponentWhite.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/nmComponentBlack.css" rel="stylesheet" type="text/css" />
+    
+    <link href="https://unpkg.com/nscontainerbase@0.4.2/nsComponent.min.css" rel="stylesheet" type="text/css" />
+   	<link href="https://unpkg.com/nsscroller@0.4.2/nsScroller.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/nsgrid@0.4.2/nsGrid.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/nsdatepicker@0.4.2/nsDatePicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/nsnavigation@0.4.2/nsNavigation.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- <link href="/JSLib/lib/css/com/org/nsGrid.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsMenu.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsComponent.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsPagination.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsList.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsScroller.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLib/lib/css/com/org/nsCalendar.css" rel="stylesheet">
+    <link href="/JSLib/lib/css/com/org/nsDatePicker.css" rel="stylesheet">
+    <link href="/JSLib/lib/css/com/org/nsNavigation.css" rel="stylesheet">
+	<link href="/JSLib/lib/css/com/org/nsFloatingLabel.css" rel="stylesheet"> -->
+    <style>
+    	.nsNavHeader .nsNavSearchContainer
+		{
+			padding: 0px 10px;
+			padding-bottom: 3px;
+		}
+		/*.nsGridRow > .nsGridCell:nth-child(1) {
+    left: 0px;
+    background-color: rgb(251, 251, 251);
+    position: sticky !important;
+    z-index: 1;
+}*/
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="divAppContainer">
+		<div id="divPageContainer" class="nmPageContainer">
+			<header class="nmPageHeader" style="width: 100%;">
+				<a class="nmLogo">
+					<span class="nmLogoTextMini"><b>NS</b></span>
+					<span class="nmLogoText"><b>NSComponent</b></span>
+				</a>
+				<nav class="nmPageHeaderContent" role="navigation">
+					<div class="nmHeaderRight">
+						<div class="nmAppName">
+							<h1>Welcome to NSGrid Demo</h1>
+						</div>
+						<div class="nmAppDetail">
+							<div style="display: inline-block;">
+								<select id="cmbTheme" class="select" onchange="handleThemeChange(event)">
+									<option value="-1">Select Theme</option>
+									<option value="White" selected>White</option>
+									<option value="Black">Black</option>
+								</select>
+							</div>
+							<div class="welcomeMessage">Select Theme:&nbsp;&nbsp;&nbsp;</div>
+						</div>
+					</div>
+				</nav>
+			</header>
+			<div id="divNavigation" style="margin-top: 50px; width: 250px;">
+			</div>
+			<div class="nmPageContent" id="divContent" style="margin: 5px 5px 5px 250px; height: 100%;">
+				<div class="box box-ns-red">
+					<div class="box-header">
+						<h3 id="compContentTitle" class="box-title"></h3>
+					</div>
+					<div id="compContent" class="box-body">
+						
+					</div>
+				</div>
+			</div>
+			<footer class="nmPageFooter"><strong>Copyright © 2021 <a href="nscomponent.com">NSComponent</a>.</strong> All rights reserved.</footer>
+		</div>
+	</div>
+    <!--   <script src="https://unpkg.com/nscomputil@0.4.2"></script>
+	 <script src="https://unpkg.com/nssvg@0.4.2"></script>
+	 <script src="https://unpkg.com/nscontainerbase@0.4.2"></script>
+	 <script src="https://unpkg.com/nspluggins@0.4.2"></script>
+	 <script src="https://unpkg.com/nsscroller@0.4.2"></script>
+	 <script src="https://unpkg.com/nsgrid@0.4.2"></script>
+	 <script src="https://unpkg.com/nsrouter@0.4.2"></script>
+	 <script src="https://unpkg.com/nsdatepicker@0.4.2"></script>
+	 <script src="https://unpkg.com/nsajax@0.3.2"></script>
+	 <script src="https://unpkg.com/nsnavigation@0.4.2"></script>-->
+	 
+<template id="legacyJSLibImports">
+	<script src="/JSLib/lib/com/org/util/nsIEUtils.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsUtil.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsPluggins.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsTouchToMouse.js"></script>
+	<script src="/JSLib/lib/com/org/prototype/base/nsContainerBase.js"></script> 
+	<script src="/JSLib/lib/com/org/util/nsPagination.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsScrollAnimator.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsScroller.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsSVG.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsMenu.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsVirtualScroll.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsFlatGrid.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsGroupingGrid.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsHierarchicalGrid.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsMasterDetailGrid.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsFilter.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsGridPluggins.js"></script>
+	<script src="/JSLib/lib/com/org/prototype/nsGrid.js"></script>
+	<script src="/JSLib/lib/com/org/prototype/nsList.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsXlsxExport.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsZip.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsExport.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsRouter.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsDateUtil.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsAjax.js"></script>
+	<script src="/JSLib/lib/com/org/prototype/nsCalendar.js"></script>
+	<script src="/JSLib/lib/com/org/prototype/nsDatePicker.js"></script>
+	<script src="/JSLib/lib/com/org/util/nsFloatingLabel.js"></script>
+	<script src="/JSLib/lib/com/org/prototype/nsNavigation.js"></script>
+</template>
+    <script src="https://unpkg.com/nscomputil@0.4.2"></script>
+    <script src="https://unpkg.com/nssvg@0.4.2"></script>
+    <script src="https://unpkg.com/nscontainerbase@0.4.2"></script>
+    <script src="https://unpkg.com/nspluggins@0.4.2"></script>
+    <script src="https://unpkg.com/nsscroller@0.4.2"></script>
+    <script src="https://unpkg.com/nsgrid@0.4.2"></script>
+    <script src="https://unpkg.com/nsrouter@0.4.2"></script>
+    <script src="https://unpkg.com/nsdatepicker@0.4.2"></script>
+    <script src="https://unpkg.com/nsnavigation@0.4.2"></script>
+	 
+	 <script>
+	 	 var nsNav = null;
+		 var nsRouter = null;
+		 var callbackInterval = null;
+		 var selectedMenu = null;
+		 var util = null;
+		 function loadHandler(event)
+		 {
+			 util = new NSUtil();
+			 initializeNav();
+			 initializeRoute();
+			 handleThemeChange(null,"White")
+			 windowResizeHandler();
+			 var divAppContainer = getElem("#divAppContainer");
+			 if(divAppContainer)
+		     {
+				 divAppContainer.style.height = window.innerHeight + "px";
+		     }
+		 }
+		 
+		 function windowResizeHandler(event)
+		 {
+			 var divAppContainer = getElem("#divAppContainer");
+			 if(divAppContainer)
+		     {
+				 divAppContainer.style.height = window.innerHeight + "px";
+				 util.dispatchEvent(document.body,"screenresized",{width: window.innerWidth,height:window.innerHeight},{width: window.innerWidth,height:window.innerHeight});
+		     }
+		 }
+		 
+		 function initializeNav()
+		 {
+			 var dataSource = [	{menuName:"Hierarchical",link:"#hierarchical",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>",selected: true},
+				 			   	{menuName:"Grouping",link:"#grouping",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 			   	{menuName:"Multi Level Grouping",link:"#multilevelgrouping",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 			   	{menuName:"Flat",link:"#flat",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 			   	{menuName:"Async Loading",link:"#asyncloading",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 			   	{menuName:"Refresh On Scroll End",link:"#refreshonscrollend",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Pagination",link:"#pagination",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Infinite Scroll",link:"#infiniteScroll",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Mobile View",link:"#mobileview",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Multi Column Sort",link:"#multisortcolumn",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Grid With Extra Header Rows",link:"#gridWithExtraHeaderRows",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Editable Grid",link:"#editableGrid",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Editable Multiple Grid",link:"#editableMultipleGrid",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Editable Row Grid",link:"#editableRowGrid",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Editable Grid With Initiator",link:"#editableRowGridWithInitiator",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Grouping Grid Editor",link:"#groupingGridEditor",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"On Demand Hierarchy",link:"#onDemandHierarchy",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Custom Icons",link:"#customIcons",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Custom Scroll",link:"#customScroll",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Filter",link:"#filtered",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Footer",link:"#footer",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"footerWithCustomScroll",link:"#Footer With CustomScroll",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Export Demo",link:"#export",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Real Time Refresh",link:"#realTimeRefresh",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Master Detail",link:"#masterDetail",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+				 				{menuName:"Master Custom Detail",link:"#masterCustomDetail",iconBeforeHtml:"<i class='fa fa-home' aria-hidden='true'></i>"},
+			     			  ];
+			    var selectedMenu = location.hash || "#hierarchical";
+			    var selectedMenuItem = null;
+			    for(var count = 0;count < dataSource.length;count++) {
+			    	if(dataSource[count].link === selectedMenu) {
+			    		selectedMenuItem = dataSource[count];
+			    		break;
+			    	}
+			    }
+			 	var divNavigation = getElem("#divNavigation");
+		        var navSetting = {header:"NAVIGATION",showCollapseIcon:true,iconCollapse:"<i class='fa fa-bars pull-right'></i>",titleField:"menuName",childField:"childMenus",
+								  iconPosition:"right",iconMenuExpanded:"<i class='fa fa-angle-left'></i>",iconMenuCollapsed:"<i class='fa fa-angle-left'></i>",collapseTopOffset:-10,
+								  dataSource:dataSource};
+			 	divNavigation.addEventListener(NSNavigation.NAVIGATION_OPEN_START,navEventHandler);
+			 	divNavigation.addEventListener(NSNavigation.NAVIGATION_CLOSE_START,navEventHandler);
+			 	divNavigation.addEventListener(NSNavigation.NAVIGATION_MENU_SELECTED,navEventHandler);
+				nsNav = new NSNavigation(divNavigation,navSetting);
+				if(selectedMenuItem) {
+					nsNav.selectMenu(selectedMenuItem);
+				}
+				navEventHandler(null,"navigationOpenStart");
+		 }
+		 
+		 function initializeRoute()
+		 {
+			 	var loadTemplateRef = loadTemplate.bind(this);
+				var arrRoute = [{route:"/hierarchical",templateUrl:"template/hierarchicalGrid.html",callback:"loadHierarchicalHandler",handler:loadTemplateRef},
+						        {route:"/grouping",templateUrl:"template/groupingGrid.html",callback:"loadGroupHandler",handler:loadTemplateRef},
+						        {route:"/multilevelgrouping",templateUrl:"template/multiLevelGroupingGrid.html",callback:"loadMultiLevelGroupHandler",handler:loadTemplateRef},
+								{route:"/flat",templateUrl:"template/flatGrid.html",callback:"loadFlatHandler",handler:loadTemplateRef},
+						        {route:"/asyncloading",templateUrl:"template/asyncLoading.html",callback:"loadAysncHandler",handler:loadTemplateRef},
+						        {route:"/refreshonscrollend",templateUrl:"template/refreshOnScrollEnd.html",callback:"loadRefreshOnScrollEnd",handler:loadTemplateRef},
+						        {route:"/pagination",templateUrl:"template/paginationDemo.html",callback:"loadPagination",handler:loadTemplateRef},
+						        {route:"/infiniteScroll",templateUrl:"template/infiniteScrollDemo.html",callback:"loadInfinitePagination",handler:loadTemplateRef},
+						        {route:"/multisortcolumn",templateUrl:"template/multiSortColumn.html",callback:"loadMultiSortColumnView",handler:loadTemplateRef},
+						        {route:"/mobileview",templateUrl:"template/mobileView.html",callback:"loadMobileView",handler:loadTemplateRef},
+						        {route:"/gridWithExtraHeaderRows",templateUrl:"template/gridWithExtraHeaderRows.html",callback:"loadGridWithExtraHeaderRows",handler:loadTemplateRef},
+						        {route:"/editableGrid",templateUrl:"template/editableGrid.html",callback:"loadEditableGrid",handler:loadTemplateRef},
+						        {route:"/editableMultipleGrid",templateUrl:"template/editableGridMultiple.html",callback:"loadMultipleEditableGrid",handler:loadTemplateRef},
+						        {route:"/editableRowGrid",templateUrl:"template/editableRowGrid.html",callback:"loadEditableRowGrid",handler:loadTemplateRef},
+						        {route:"/editableGridWithInitiator",templateUrl:"template/editableGridWithInitiator.html",callback:"loadEditableGridWithInitiator",handler:loadTemplateRef},
+						        {route:"/editableMultipleRowGrid",templateUrl:"template/editableRowGridMultiple.html",callback:"loadMultipleEditableRowGrid",handler:loadTemplateRef},
+						        {route:"/editableRowGridWithInitiator",templateUrl:"template/editableRowGridWithInitiator.html",callback:"loadEditableRowGridWithInitiator",handler:loadTemplateRef},
+						        {route:"/groupingGridEditor",templateUrl:"template/groupingGridEditor.html",callback:"loadGroupingEditorView",handler:loadTemplateRef},
+						        {route:"/onDemandHierarchy",templateUrl:"template/onDemandHierarchy.html",callback:"loadOnDemandHierarchyHandler",handler:loadTemplateRef},
+						        {route:"/customIcons",templateUrl:"template/customIconsGrid.html",callback:"loadCustomIconsHandler",handler:loadTemplateRef},
+						        {route:"/customScroll",templateUrl:"template/customScroll.html",callback:"loadCustomScrollHandler",handler:loadTemplateRef},
+						        {route:"/filtered",templateUrl:"template/filteredGrid.html",callback:"loadFilteredHandler",handler:loadTemplateRef},
+						        {route:"/footer",templateUrl:"template/footerGrid.html",callback:"loadFooterHandler",handler:loadTemplateRef},
+						        {route:"/footerWithCustomScroll",templateUrl:"template/footerGridWithCustomScroll.html",callback:"loadFooterGridWithCustomScrollHandler",handler:loadTemplateRef},
+						        {route:"/export",templateUrl:"template/exportDemo.html",callback:"loadExportDemoHandler",handler:loadTemplateRef},
+						        {route:"/realTimeRefresh",templateUrl:"template/realTimeRefreshGrid.html",callback:"loadRealTimeRefreshDemoHandler",handler:loadTemplateRef},
+						        {route:"/masterDetail",templateUrl:"template/masterDetailGrid.html",callback:"loadMasterDetailHandler",handler:loadTemplateRef},
+						        {route:"/masterCustomDetail",templateUrl:"template/masterCustomDetailGrid.html",callback:"loadMasterCustomDetailHandler",handler:loadTemplateRef},
+						      ];
+				var setting = {mode:"hash",defaultRoute:"/hierarchical"};//,templateTarget:"myDiv"
+				nsRouter = new NSRouter(arrRoute,setting);
+				console.log(nsRouter.getCurrentRoute());
+		 }
+		 
+		 function navEventHandler(event,eventType)
+	     {
+	        var divContent = getElem("#divContent");
+	        eventType = eventType || event.type;
+	        switch(eventType)
+	        {
+	          case "navigationOpenStart":
+	            divContent.style.marginLeft = "250px";  
+	          break;
+	          case "navigationCloseStart":
+	            divContent.style.marginLeft = "50px";
+	          break;
+	          case "navigationMenuSelected":
+	            var item = event["detail"];
+	            if(nsRouter)// && (!this.selectedMenu || this.selectedMenu.link != item.link)
+	            {
+	                //nsRouter.routeTo(item.link);
+	                selectedMenu = item;
+	            }
+	          break;
+	        }
+	     }
+		 
+		 function loadTemplate(item)
+		 {
+		 	var self = this;
+		 	var divDetails = getElem("#compContent");
+		 	if(item["templateUrl"])
+		 	{
+		 		var templateLoadHandler = function(templateText)
+		 		{
+		 			divDetails.innerHTML = "";
+		 			if(templateText)
+		 			{
+		 				divDetails.appendChild(getElementFromText(templateText));
+		 				fireCallback(item);
+		 				//callbackInterval = setInterval(function(){fireCallback(item)} ,1000);
+		 			}
+		 			else
+		 			{
+		 				console.error(item["templateUrl"] + " was not loaded.Please check the URL")
+		 			}
+		 		};
+		 		var templateErrorHandler = function(errorText)
+		 		{
+		 			divDetails.innerHTML = "";
+		 			console.error(item["templateUrl"] + " was not loaded.Please check the URL")
+		 		};
+		 		util.getTemplateFromURL(item["templateUrl"],templateLoadHandler,templateErrorHandler);
+		 	}
+		 }
+		 
+		 function handleThemeChange(event,theme)
+	     {
+	        var selectedTheme = theme ? theme : event.target.value;
+	        if(selectedTheme && selectedTheme != "-1")
+	        {
+	        	document.body.setAttribute("class","nmPageBody" + selectedTheme);
+	        	themeChangeHandler(selectedTheme);
+	        	util.dispatchEvent(document.body,"themeChanged",{selectedTheme: selectedTheme},{selectedTheme: selectedTheme});
+	        }
+	     }
+		 
+		 function getElementFromText(htmlText)
+		 {
+		 	if(htmlText)
+		 	{
+		 		var div = document.createElement("div");
+		 		div.innerHTML = htmlText;
+		 		var scripts = div.getElementsByTagName("script");
+		 		for (var i = 0; i < scripts.length; ++i) 
+		 		{
+		 		   var script = scripts[i];
+		 		   eval(script.innerHTML);
+		 		}
+		 		if(div["childNodes"] && div["childNodes"].length > 1)
+		 		{
+		 			return div;
+		 		}
+		 		return div.firstChild;
+		 	}
+		 	return null;
+		 };
+		 
+		 function fireCallback(item)
+		 {
+		 	//evalScript(document.querySelector("#divDetails"),item);
+		 	if(window[item["callback"]])
+		 	{
+		 		clearInterval(callbackInterval);
+		 		window[item["callback"]]();
+		 	}
+		 }
+		 
+		 function themeChangeHandler(selectedTheme)
+		 {
+		 	if(selectedTheme)
+		 	{
+		 		if(nsNav)
+		 		{
+		 			nsNav.setTheme(selectedTheme);	
+		 		}
+		 		if(window["themeChanged"])
+		 		{
+		 			window["themeChanged"](selectedTheme);	
+		 		}
+		 	}
+		 }
+		 
+		 function getElem(selector)
+		 {
+			 return document.querySelector(selector);
+		 }
+		 
+		 window.addEventListener('load', loadHandler);
+		 window.addEventListener('resize', windowResizeHandler);
+	 </script>
+  </body>
+</html>

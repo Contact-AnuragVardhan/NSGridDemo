@@ -1,0 +1,14 @@
+{
+  "name": "nsgrid-demo-client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/server.mjs src 5173",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/server.mjs dist 4173"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
